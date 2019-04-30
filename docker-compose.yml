@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  sql:
+    build: ./sql
+
+
+  node:
+    build: ./node
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - sql:sql
+    depends_on:
+      - sql
+    environment:
+      - .env
+      - HOST=sql
+      
+
+  # client:
+  #   build: ./Xpo2
+  #   ports:
+  #     - "4200:4200"
+  #   depends_on:
+  #     - node
